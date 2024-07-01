@@ -3,8 +3,8 @@
 
 import SwiftUI
 
-final class ViewControllerManager {
-    static var rootViewController: UIViewController? {
+public final class ViewControllerManager {
+    public static var rootViewController: UIViewController? {
         UIApplication.shared.connectedScenes
             .filter { $0.activationState == .foregroundActive }
             .compactMap { $0 as? UIWindowScene }
@@ -12,7 +12,7 @@ final class ViewControllerManager {
             .filter { $0.isKeyWindow }.first?.rootViewController
     }
     
-    static var topViewController: UIViewController? {
+    public static var topViewController: UIViewController? {
         guard var topController = rootViewController else { return nil }
         while let presentedViewController = topController.presentedViewController {
             topController = presentedViewController
@@ -20,7 +20,7 @@ final class ViewControllerManager {
         return topController
     }
     
-    static func viewOfTypeFromStack<T>(_ type: T.Type) -> T? {
+    public static func viewOfTypeFromStack<T>(_ type: T.Type) -> T? {
         var currentViewController = rootViewController
         while let nextViewController = currentViewController {
             if let foundViewController = nextViewController as? T {
@@ -31,11 +31,11 @@ final class ViewControllerManager {
         return nil
     }
     
-    static func viewOfTypeIsInStack<T>(_ type: T.Type) -> Bool {
+    public static func viewOfTypeIsInStack<T>(_ type: T.Type) -> Bool {
         viewOfTypeFromStack(type) != nil
     }
     
-    static func present(_ vc: UIViewController, animated: Bool, completion: @escaping () -> () = {}) {
+    public static func present(_ vc: UIViewController, animated: Bool, completion: @escaping () -> () = {}) {
         guard let topViewController else { return }
         topViewController.present(vc, animated: animated, completion: completion)
     }
