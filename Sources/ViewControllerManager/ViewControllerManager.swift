@@ -36,7 +36,12 @@ public final class ViewControllerManager {
     }
     
     public static func present(_ vc: UIViewController, animated: Bool, completion: @escaping () -> () = {}) {
-        guard let topViewController else { return }
+        guard let topViewController else { completion(); return }
         topViewController.present(vc, animated: animated, completion: completion)
+    }
+    
+    public static func dismiss(animated: Bool, completion: @escaping () -> () = {}) {
+        guard let topViewController else { completion(); return }
+        topViewController.dismiss(animated: animated, completion: completion)
     }
 }
